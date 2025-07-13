@@ -6,6 +6,8 @@ import { router } from './router/Routes.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <div class="libertinus-mono-regular">
+      <RouterProvider router={router}/>
+    </div>
   </StrictMode>,
 )
