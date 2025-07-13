@@ -9,8 +9,10 @@ const Home = () => {
         <div>
             <Banner />
             <About />
-            <Location />
-            <Promotions />
+            <div className="my-8 flex flex-col md:flex-row">
+                <Location />
+                <Promotions />
+            </div>
         </div>
     );
 };

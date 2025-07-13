@@ -35,7 +35,7 @@ const Navbar = () => {
                     {links}
                 </ul>
                 </div>
-                <NavLink to='/' className="flex items-center font-bold text-xl gap-x-1"><img src={logoImg} className="w-8" alt='logo' />SportsClub</NavLink>
+                <NavLink to='/' className="flex items-center font-extrabold text-xl gap-x-1"><img src={logoImg} className="w-8" alt='logo' />SportsClub</NavLink>
             </div>
 
             <div className="navbar-center hidden lg:flex">
