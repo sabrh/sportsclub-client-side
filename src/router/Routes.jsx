@@ -6,6 +6,8 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Courts from "../pages/Courts";
 import AuthLayout from "../layouts/AuthLayout";
+import Dashboard from "../pages/Dashboard";
+import PrivateRoute from "../routes/PrivateRoute"
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,12 @@ export const router = createBrowserRouter([
       {
         path: "/courts",
         element: <Courts />,
+      },
+      {
+        path: "/dashboard",
+        element: <PrivateRoute>
+          <Dashboard />
+        </PrivateRoute>
       },
       
     ]

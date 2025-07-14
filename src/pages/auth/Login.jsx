@@ -2,11 +2,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form'
 import { FaEye } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
     const [showPassword, setShowPassword] = React.useState(false)
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
     const navigate = useNavigate();
 
     const { signIn } =useAuth()
@@ -16,6 +18,7 @@ const Login = () => {
         signInWithGoogle()
         .then(result =>{
             console.log(result.user)
+            navigate(from, { replace: true });
         })
         .catch(error =>{
             console.log(error)
@@ -30,7 +33,7 @@ const Login = () => {
             signIn(data.email, data.password)
              .then(result =>{
                 console.log(result.user)
-                navigate('/')
+                navigate(from, { replace: true });
             })
             .catch(error =>{
                 console.error(error)

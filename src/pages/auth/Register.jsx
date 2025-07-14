@@ -1,19 +1,23 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import { updateProfile } from 'firebase/auth';
 import { FaEye } from 'react-icons/fa';
 
 const Register = () => {
     const [showPassword, setShowPassword] = React.useState(false)
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+    const navigate = useNavigate();
 
     const { signInWithGoogle } = useAuth()
     const handleGoogleSignIn = () =>{
         signInWithGoogle()
         .then(result =>{
             console.log(result.user)
+            navigate(from, { replace: true });
         })
         .catch(error =>{
             console.log(error)
@@ -22,8 +26,6 @@ const Register = () => {
 
     const { register, handleSubmit, formState: {errors} } = useForm()
     const { createUser } =useAuth()
-
-    const navigate = useNavigate();
     
     const onSubmit = data =>{
         console.log(data)
