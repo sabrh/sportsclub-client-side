@@ -3,9 +3,21 @@ import { useForm } from 'react-hook-form'
 import { FaEye } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink } from 'react-router';
+import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
     const [showPassword, setShowPassword] = React.useState(false)
+
+    const {signInWithGoogle} = useAuth()
+    const handleGoogleSignIn = () =>{
+        signInWithGoogle()
+        .then(result =>{
+            console.log(result.user)
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
 
     const { register, handleSubmit, formState: {errors} } = useForm()
 
@@ -56,7 +68,7 @@ const Login = () => {
             </fieldset>
             <p>Don't have and account? <NavLink to='/register' className='text-blue-700'>Register</NavLink> now!</p>
             <div className="divider">OR</div>
-            <button className='btn btn-soft rounded-full w-2/3 mt-4 text-lg'>Login with <FcGoogle /></button>
+            <button onClick={handleGoogleSignIn} className='btn btn-soft rounded-full w-2/3 mt-4 text-lg'>Signin with <FcGoogle /></button>
         </form>
         </div>
     );

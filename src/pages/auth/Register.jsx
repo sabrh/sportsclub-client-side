@@ -9,6 +9,17 @@ import { FaEye } from 'react-icons/fa';
 const Register = () => {
     const [showPassword, setShowPassword] = React.useState(false)
 
+    const { signInWithGoogle } = useAuth()
+    const handleGoogleSignIn = () =>{
+        signInWithGoogle()
+        .then(result =>{
+            console.log(result.user)
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
+
     const { register, handleSubmit, formState: {errors} } = useForm()
     const { createUser } =useAuth()
     
@@ -88,7 +99,7 @@ const Register = () => {
             </fieldset>
             <p>Already have an account? <NavLink to='/login' className='text-blue-700'>Login</NavLink> here.</p>
             <div className="divider">OR</div>
-            <button className='btn btn-soft rounded-full w-2/3 mt-4 text-lg'>Login with <FcGoogle /></button>
+            <button onClick={handleGoogleSignIn} className='btn btn-soft rounded-full w-2/3 mt-4 text-lg'>Signin with <FcGoogle /></button>
         </form>
         </div>
     );
