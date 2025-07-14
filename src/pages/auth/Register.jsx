@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import { updateProfile } from 'firebase/auth';
 import { FaEye } from 'react-icons/fa';
@@ -22,6 +22,8 @@ const Register = () => {
 
     const { register, handleSubmit, formState: {errors} } = useForm()
     const { createUser } =useAuth()
+
+    const navigate = useNavigate();
     
     const onSubmit = data =>{
         console.log(data)
@@ -36,6 +38,10 @@ const Register = () => {
             })
             .then(() => {
                 console.log("User profile updated:", user);
+                alert("Account created successfully!")
+                navigate('/login')
+
+
             })
             .catch(err => {
                 console.error("Error updating profile:", err);

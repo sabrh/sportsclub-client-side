@@ -2,11 +2,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form'
 import { FaEye } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
     const [showPassword, setShowPassword] = React.useState(false)
+    const navigate = useNavigate();
+
+    const { signIn } =useAuth()
 
     const {signInWithGoogle} = useAuth()
     const handleGoogleSignIn = () =>{
@@ -21,14 +24,23 @@ const Login = () => {
 
     const { register, handleSubmit, formState: {errors} } = useForm()
 
-    const onSubmit = data =>{
-        console.log(data)
-    }
+     const onSubmit = data =>{
+            console.log(data)
+    
+            signIn(data.email, data.password)
+             .then(result =>{
+                console.log(result.user)
+                navigate('/')
+            })
+            .catch(error =>{
+                console.error(error)
+            })
+    };
 
 
     return (
         <div className="card w-full">
-        <h2 className='text-2xl font-bold'>Welcome back to our Club!</h2>
+        <h2 className='text-2xl font-bold'>Welcome to our Club!</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset className="fieldset">
 
