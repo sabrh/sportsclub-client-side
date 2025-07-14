@@ -2,13 +2,38 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink } from 'react-router';
+import useAuth from '../../hooks/useAuth';
+import { updateProfile } from 'firebase/auth';
+import { FaEye } from 'react-icons/fa';
 
 const Register = () => {
+    const [showPassword, setShowPassword] = React.useState(false)
+
     const { register, handleSubmit, formState: {errors} } = useForm()
+    const { createUser } =useAuth()
     
-        const onSubmit = data =>{
-            console.log(data)
-        }
+    const onSubmit = data =>{
+        console.log(data)
+
+        createUser(data.email, data.password)
+        .then(result => {
+            const user = result.user;
+            console.log("Before update:", user);
+
+            updateProfile(user, {
+                displayName: data.firstName
+            })
+            .then(() => {
+                console.log("User profile updated:", user);
+            })
+            .catch(err => {
+                console.error("Error updating profile:", err);
+            })
+            })
+        .catch(error => {
+        console.error("Error creating user:", error);
+        });
+};
 
 
     return (
@@ -28,7 +53,8 @@ const Register = () => {
                 className="input" placeholder="Email" />
 
             <label className="label">Password</label>
-            <input type="password" {...register('password', {
+            <div className='relative w-full'>
+                <input type={showPassword ? "text" : "password"} {...register('password', {
                 required: true,
                 minLength: 6,
                 pattern: {
@@ -36,6 +62,11 @@ const Register = () => {
                 },
                 })} 
                 className="input" placeholder="Password" />
+                <span onClick={() => setShowPassword(!showPassword)}
+                    className='absolute left-55 md:left-70 top-3 text-xl cursor-pointer '>
+                    <FaEye />
+                </span>
+            </div>
                 {
                     errors.password?.type === 'required' && <p className='text-red-500'>Password is required!</p>
                 }

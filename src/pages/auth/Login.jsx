@@ -1,9 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form'
+import { FaEye } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink } from 'react-router';
 
 const Login = () => {
+    const [showPassword, setShowPassword] = React.useState(false)
+
     const { register, handleSubmit, formState: {errors} } = useForm()
 
     const onSubmit = data =>{
@@ -23,10 +26,20 @@ const Login = () => {
                 className="input" placeholder="Email" />
 
             <label className="label">Password</label>
-            <input type="password" {...register('password', {
+            <div className='relative w-full'>
+                <input type={showPassword ? "text" : "password"} {...register('password', {
                 required: true,
-                minLength: 6})} 
+                minLength: 6,
+                pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
+                },
+                })} 
                 className="input" placeholder="Password" />
+                <span onClick={() => setShowPassword(!showPassword)}
+                    className='absolute left-55 md:left-70 top-3 text-xl cursor-pointer '>
+                    <FaEye />
+                </span>
+            </div>
                 {
                     errors.password?.type === 'required' && <p className='text-red-500'>Password is required!</p>
                 }
