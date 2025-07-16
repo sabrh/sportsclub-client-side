@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
+import { NavLink } from 'react-router';
+import Swal from 'sweetalert2';
 
 const Bookings = () => {
   const { user } = useAuth();
@@ -16,14 +18,32 @@ const Bookings = () => {
     enabled: !!user?.email
   });
 
-  const handleCancelBooking = async (id) => {
+const handleCancelBooking = async (id) => {
+  const confirm = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to cancel this booking?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Cancel!',
+    cancelButtonText: 'Keep'
+  });
+
+  if (confirm.isConfirmed) {
     try {
-      await axios.delete(`http://localhost:3000/bookings/${id}`);
-      refetch();
+      await axios.delete(`http://localhost:3000/bookings/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}` // Optional, for future JWT use
+        }
+      });
+      Swal.fire('Cancelled!', 'Your booking has been cancelled.', 'success');
+      refetch(); // refresh the list
     } catch (error) {
       console.error('Failed to cancel booking:', error);
+      Swal.fire('Error', error.response?.data?.message || 'Failed to cancel booking', 'error');
     }
-  };
+  }
+};
+
 
   const handlePayment = (id) => {
     // Navigate to payment page
@@ -105,12 +125,14 @@ const Bookings = () => {
                       </button>
                     )}
                     {booking.status === 'approved' && user?.role === 'member' && (
-                      <button 
+                      <NavLink to='/payment'>
+                        <button 
                         className="btn btn-primary btn-sm"
                         onClick={() => handlePayment(booking._id)}
                       >
                         Pay Now
                       </button>
+                      </NavLink>
                     )}
                   </td>
                 </tr>
