@@ -1,21 +1,22 @@
 import { NavLink } from 'react-router';
 import { FaHome, FaUser, FaCalendarAlt, FaBullhorn, FaMoneyBillWave, FaHistory, FaUsersCog, FaClipboardList } from 'react-icons/fa';
 
+
 const DashboardSidebar = ({ user }) => {
   const commonLinks = (
     <>
       <li>
-        <NavLink to="/dashboard" end className="flex items-center gap-2">
+        <NavLink to="" end className="flex items-center gap-2">
           <FaHome /> Dashboard
         </NavLink>
       </li>
       <li>
-        <NavLink to="/dashboard/profile" className="flex items-center gap-2">
+        <NavLink to="profile" className="flex items-center gap-2">
           <FaUser /> My Profile
         </NavLink>
       </li>
       <li>
-        <NavLink to="/dashboard/bookings" className="flex items-center gap-2">
+        <NavLink to="bookings" className="flex items-center gap-2">
           <FaCalendarAlt /> My Bookings
         </NavLink>
       </li>
