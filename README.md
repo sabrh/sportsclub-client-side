@@ -5,7 +5,7 @@ A full-stack web application designed for managing a single sports club’s oper
 🔗 **Live Site:** https://sports-club-sabrh.netlify.app/ 
 🛠️ **Admin Login:**  
 **Email:** admin@sportsclub.com  
-**Password:** admin7141  
+**Password:** Admin714*  
 
 ---
 

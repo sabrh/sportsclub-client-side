@@ -4,9 +4,11 @@ import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const Bookings = () => {
   const { user } = useAuth();
+
   const [activeTab, setActiveTab] = useState('pending');
   
   const { data: bookings, isLoading, refetch } = useQuery({

@@ -13,12 +13,15 @@ const Login = () => {
 
     const { signIn } =useAuth()
 
+
     const {signInWithGoogle} = useAuth()
     const handleGoogleSignIn = () =>{
         signInWithGoogle()
-        .then(result =>{
+        .then((result) =>{
             console.log(result.user)
+
             navigate(from, { replace: true });
+
         })
         .catch(error =>{
             console.log(error)

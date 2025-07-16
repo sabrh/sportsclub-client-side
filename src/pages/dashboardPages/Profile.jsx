@@ -35,7 +35,7 @@ const Profile = () => {
         <div className="bg-gray-50 p-4 rounded">
           <h4 className="font-medium mb-2">Account Information</h4>
           <p><span className="font-medium">Member Since:</span> {new Date(userData?.createdAt).toLocaleDateString()}</p>
-          <p><span className="font-medium">Role:</span> {userData?.role || 'user'}</p>
+          <p><span className="font-medium">Role:</span> {user?.role || 'user'}</p>
         </div>
         
         <div className="bg-gray-50 p-4 rounded">
