@@ -17,6 +17,7 @@ import PaymentHistory from "../pages/dashboardPages/PaymentHistory"
 import ManageBookings from "../pages/dashboardPages/admin/ManageBookings"
 import ManageCourts from "../pages/dashboardPages/admin/ManageCourts"
 import ManageUsers from "../pages/dashboardPages/admin/ManageUsers"
+import Payment from "../pages/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
         path: "/courts",
         element: <Courts />,
       },
+      {
+        path: "/payment/:id",
+        element: <PrivateRoute><Payment /></PrivateRoute>
+      }
       
     ]
   },

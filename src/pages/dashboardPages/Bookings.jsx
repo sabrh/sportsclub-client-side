@@ -125,7 +125,7 @@ const handleCancelBooking = async (id) => {
                       </button>
                     )}
                     {booking.status === 'approved' && user?.role === 'member' && (
-                      <NavLink to='/payment'>
+                      <NavLink to='/payment/:id'>
                         <button 
                         className="btn btn-primary btn-sm"
                         onClick={() => handlePayment(booking._id)}
