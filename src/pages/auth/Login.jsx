@@ -4,21 +4,33 @@ import { FaEye } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
+import useAxios from '../../hooks/useAxios';
 
 const Login = () => {
     const [showPassword, setShowPassword] = React.useState(false)
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
+    const axiosInstance = useAxios;
+    
     const navigate = useNavigate();
+    const from = location.state?.from || '/';
 
     const { signIn } =useAuth()
-
-
     const {signInWithGoogle} = useAuth()
+
     const handleGoogleSignIn = () =>{
         signInWithGoogle()
-        .then((result) =>{
-            console.log(result.user)
+        .then(async (result) =>{
+            const user = result.user;
+
+            const userInfo ={
+                email: user.email,
+                role: 'user',
+                created_at: new Date().toISOString(),
+                last_log_in: new Date().toISOString()
+            }
+
+            const res=await axiosInstance.post('/users', userInfo);
+            console.log('user update info', res.data);
 
             navigate(from, { replace: true });
 

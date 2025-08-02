@@ -1,57 +1,61 @@
-import React, { useState, useContext } from "react";
-import axios from "axios";
-import { useQuery } from '@tanstack/react-query';
-import { AuthContext } from '../../context/AuthContext'; 
+import React from "react";
+import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useQuery } from "@tanstack/react-query";
 
 const PaymentHistory = () => {
-  const { user } = useContext(AuthContext);
-  const [layout, setLayout] = useState('table');
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const formatDate = (iso) => new Date(iso).toLocaleString();
 
-  const { data: payments = [] } = useQuery(['payments', user?.email], async () => {
-    const res = await axios.get(`/payments/${user.email}`);
-    return res.data;
+  const { isPending, data: payments = [] } = useQuery({
+    queryKey: ['payments', user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/payments?email=${user.email}`);
+      return res.data;
+    }
   });
 
-  return (
-    <div>
-      <div className="flex gap-2 mb-4">
-        <button onClick={() => setLayout('card')} className="btn">Card View</button>
-        <button onClick={() => setLayout('table')} className="btn">Table View</button>
-      </div>
+  if (isPending) {
+    return <span className="loading loading-spinner loading-xl"></span>;
+  }
 
-      {layout === 'table' ? (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Transaction ID</th>
-              <th>Date</th>
-              <th>Price</th>
-              <th>Court Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {payments.map(p => (
-              <tr key={p._id}>
-                <td>{p.transactionId}</td>
-                <td>{p.date}</td>
-                <td>৳{p.price}</td>
-                <td>{p.courtType}</td>
+  return (
+    <div className="overflow-x-auto shadow-md rounded-xl">
+      <table className="table table-zebra w-full">
+        <thead className="bg-base-200 text-base font-semibold">
+          <tr>
+            <th>#</th>
+            <th>Booking ID</th>
+            <th>Email</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Transaction</th>
+            <th>Paid At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {payments?.length > 0 ? (
+            payments.map((p, index) => (
+              <tr key={p.transactionId}>
+                <td>{index + 1}</td>
+                <td title={p.id}>{p.id}</td>
+                <td>{p.email}</td>
+                <td>BDT. {p.amount}</td>
+                <td className="capitalize">{p.paymentMethod}</td>
+                <td className="font-mono text-sm"><span>{p.transactionId}</span></td>
+                <td>{formatDate(p.paid_at_string)}</td>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {payments.map(p => (
-            <div key={p._id} className="p-4 shadow-lg border rounded-md">
-              <h2 className="text-lg font-semibold">{p.courtType}</h2>
-              <p>Date: {p.date}</p>
-              <p>Price: ৳{p.price}</p>
-              <p>Txn ID: {p.transactionId}</p>
-            </div>
-          ))}
-        </div>
-      )}
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="text-center text-gray-500 py-6">
+                No Payment History Found
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -14,15 +14,14 @@ import AdminRoute from "../routes/AdminRoute";
 import Bookings from "../pages/dashboardPages/Bookings"
 import Announcements from "../pages/dashboardPages/Announcements"
 import PaymentHistory from "../pages/dashboardPages/PaymentHistory"
-import ManageBookings from "../pages/dashboardPages/admin/ManageBookings"
 import ManageCourts from "../pages/dashboardPages/admin/ManageCourts"
-import ManageUsers from "../pages/dashboardPages/admin/ManageMembers"
 import Payment from "../pages/Payment";
 import AdminHome from "../pages/dashboardPages/admin/AdminHome";
 import ManageMembers from "../pages/dashboardPages/admin/ManageMembers";
-import ConfirmedBookings from "../pages/dashboardPages/admin/ConfirmedBookings"
 import ManageCoupons from "../pages/dashboardPages/admin/ManageCoupons";
-import MakeAnnouncements from "../pages/dashboardPages/admin/MakeAnnouncements";
+import MakeAnnouncements from "../pages/dashboardPages/admin/MakeAnnouncement";
+import ManageBookings from "../pages/dashboardPages/admin/ManageBookings";
+import AllUsers from "../pages/dashboardPages/admin/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -38,10 +37,6 @@ export const router = createBrowserRouter([
         path: "/courts",
         element: <Courts />,
       },
-      {
-        path: "/payment/:id",
-        element: <PrivateRoute><Payment /></PrivateRoute>
-      }
       
     ]
   },
@@ -83,6 +78,10 @@ export const router = createBrowserRouter([
         element: <Announcements />,
       },
       {
+        path: "payment/:id",
+        element: <Payment />,
+      },
+      {
         path: "payment-history",
         element: <PrivateRoute><PaymentHistory /></PrivateRoute>,
       },
@@ -92,32 +91,28 @@ export const router = createBrowserRouter([
         element: <AdminRoute><AdminHome /></AdminRoute>,
       },
       {
-        path: "manage-bookings",
-        element: <AdminRoute><ManageBookings /></AdminRoute>,
-      },
-      {
-        path: "manage-users",
-        element: <AdminRoute><ManageUsers /></AdminRoute>,
-      },
-      {
         path: "manage-courts",
-        element: <AdminRoute><ManageCourts /></AdminRoute>,
+        element: <ManageCourts />,
+      },
+      {
+        path: "manage-bookings",
+        element: <ManageBookings />,
       },
       {
         path: "manage-members",
-        element: <AdminRoute><ManageMembers /></AdminRoute>,
+        element: <ManageMembers />,
       },
       {
-        path: "confirmed-bookings",
-        element: <AdminRoute><ConfirmedBookings /></AdminRoute>,
+        path: "all-users",
+        element: <AllUsers />,
       },
       {
         path: "manage-coupons",
         element: <AdminRoute><ManageCoupons /></AdminRoute>,
       },
       {
-        path: "make-announcements",
-        element: <AdminRoute><MakeAnnouncements /></AdminRoute>,
+        path: "make-announcement",
+        element: <MakeAnnouncements />,
       },
     ]
   }

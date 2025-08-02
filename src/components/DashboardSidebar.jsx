@@ -1,5 +1,9 @@
 import { NavLink } from 'react-router';
-import { FaHome, FaUser, FaCalendarAlt, FaBullhorn, FaMoneyBillWave, FaHistory, FaUsersCog, FaClipboardList } from 'react-icons/fa';
+import { FaHome, FaUser, FaCalendarAlt, FaBullhorn, FaMoneyBillWave, FaHistory, FaUsersCog, FaClipboardList, FaCheckCircle } from 'react-icons/fa';
+import { MdPending } from 'react-icons/md';
+import { GrGroup } from 'react-icons/gr';
+import { BiSpeaker, BiUser } from 'react-icons/bi';
+import { BsPlay } from 'react-icons/bs';
 
 
 const DashboardSidebar = ({ user }) => {
@@ -23,6 +27,36 @@ const DashboardSidebar = ({ user }) => {
       <li>
         <NavLink to="/dashboard/announcements" className="flex items-center gap-2">
           <FaBullhorn /> Announcements
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard/manage-bookings" className="flex items-center gap-2">
+          <MdPending /> Manage Bookings
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard/manage-members" className="flex items-center gap-2">
+          <GrGroup /> Manage Members
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard/all-users" className="flex items-center gap-2">
+          <BiUser /> All Users
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard/manage-courts" className="flex items-center gap-2">
+          <BsPlay /> Manage Courts
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard/make-announcement" className="flex items-center gap-2">
+          <BiSpeaker /> Make Announcement
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard/payment-history" className="flex items-center gap-2">
+          <FaMoneyBillWave /> Payment History
         </NavLink>
       </li>
     </>

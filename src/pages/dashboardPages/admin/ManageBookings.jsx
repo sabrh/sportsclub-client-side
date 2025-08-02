@@ -1,58 +1,112 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 
 const ManageBookings = () => {
-  const [bookings, setBookings] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
-  const fetchBookings = () => {
-    axios.get('/pending-bookings')
-      .then(res => setBookings(res.data))
-      .catch(err => console.error(err));
+  const { data: pendingBookings = [], isLoading, refetch } = useQuery({
+    queryKey: ['pendingBookings'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/bookings/pending');
+      return res.data;
+    }
+  });
+
+  const handleApprove = async (booking) => {
+    try {
+      const res = await axiosSecure.patch(`/bookings/approve/${booking._id}`, {
+        userEmail: booking.userEmail,
+      });
+
+      if (res.data.modifiedCount > 0) {
+        Swal.fire('Approved!', 'Booking approved and user is now a member.', 'success');
+        refetch();
+      }
+    } catch (error) {
+      Swal.fire('Error', error.message || 'Failed to approve booking', 'error');
+    }
   };
 
-  useEffect(() => {
-    fetchBookings();
-  }, []);
+  const handleReject = async (bookingId) => {
+    const confirm = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to reject this booking?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Reject',
+      cancelButtonText: 'No, Cancel'
+    });
 
-  const handleAction = (id, status) => {
-    axios.patch(`/bookings/${id}`, { status })
-      .then(() => {
-        Swal.fire('Success', `Booking ${status}`, 'success');
-        fetchBookings();
-      })
-      .catch(() => Swal.fire('Error', 'Could not update booking', 'error'));
+    if (confirm.isConfirmed) {
+      try {
+        const res = await axiosSecure.delete(`/bookings/${bookingId}`);
+        if (res.data.deletedCount > 0) {
+          Swal.fire('Rejected!', 'Booking has been rejected and deleted.', 'success');
+          refetch();
+        }
+      } catch (error) {
+        Swal.fire('Error', error.message || 'Failed to reject booking', 'error');
+      }
+    }
   };
+
+  if (isLoading) {
+    return <span className="loading loading-spinner loading-lg"></span>;
+  }
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Manage Pending Bookings</h2>
+    <div className="bg-white p-6 rounded-lg shadow">
+      <h2 className="text-2xl font-bold mb-6">Manage pending Bookings</h2>
+
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
-            <tr className="bg-gray-100">
-              <th>User</th>
+            <tr>
+              <th>Email</th>
               <th>Court</th>
               <th>Date</th>
               <th>Slots</th>
               <th>Price</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {bookings.map(b => (
-              <tr key={b._id}>
-                <td>{b.userEmail}</td>
-                <td>{b.courtType}</td>
-                <td>{b.date}</td>
-                <td>{b.slots.join(', ')}</td>
-                <td>${b.price}</td>
-                <td className="space-x-2">
-                  <Button onClick={() => handleAction(b._id, 'approved')} size="sm" className="bg-green-500 hover:bg-green-600">Accept</Button>
-                  <Button onClick={() => handleAction(b._id, 'rejected')} size="sm" variant="destructive">Reject</Button>
+            {pendingBookings.length > 0 ? (
+              pendingBookings.map((booking) => (
+                <tr key={booking._id}>
+                  <td>{booking.userEmail}</td>
+                  <td>{booking.courtType}</td>
+                  <td>{new Date(booking.date).toLocaleDateString()}</td>
+                  <td>{booking.selectedSlots.join(', ')}</td>
+                  <td>BDT.{booking.price}</td>
+                  <td>
+                    <span className="badge badge-warning">Pending</span>
+                  </td>
+                  <td className="space-x-2">
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => handleApprove(booking)}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="btn btn-error btn-sm"
+                      onClick={() => handleReject(booking._id)}
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center py-4">
+                  No pending bookings
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -61,4 +115,3 @@ const ManageBookings = () => {
 };
 
 export default ManageBookings;
-

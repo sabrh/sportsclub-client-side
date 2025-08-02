@@ -5,18 +5,31 @@ import { NavLink, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import { updateProfile } from 'firebase/auth';
 import { FaEye } from 'react-icons/fa';
+import useAxios from '../../hooks/useAxios';
 
 const Register = () => {
     const [showPassword, setShowPassword] = React.useState(false)
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
+    const axiosInstance = useAxios;
     const navigate = useNavigate();
 
     const { signInWithGoogle } = useAuth()
     const handleGoogleSignIn = () =>{
         signInWithGoogle()
-        .then(result =>{
-            console.log(result.user)
+        .then(async (result) =>{
+            const user = result.user;
+
+            const userInfo ={
+                email: user.email,
+                role: 'user',
+                created_at: new Date().toISOString(),
+                last_log_in: new Date().toISOString()
+            }
+
+            const res=await axiosInstance.post('/users', userInfo);
+            console.log('user update info', res.data);
+
             navigate(from, { replace: true });
         })
         .catch(error =>{
@@ -31,9 +44,19 @@ const Register = () => {
         console.log(data)
 
         createUser(data.email, data.password)
-        .then(result => {
+        .then(async (result) => {
             const user = result.user;
-            console.log("Before update:", user);
+            
+            const userInfo = {
+                email: data.email,
+                role: 'user',
+                created_at: new Date().toISOString(),
+                last_log_in: new Date().toISOString()
+            }
+
+            const userRes = await axiosInstance.post('/users', userInfo);
+            console.log(userRes.data);
+
 
             updateProfile(user, {
                 displayName: data.firstName
