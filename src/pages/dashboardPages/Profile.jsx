@@ -8,7 +8,7 @@ const Profile = () => {
   const { data: userData, isLoading } = useQuery({
     queryKey: ['user', user?.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:3000/users/${user?.email}`);
+      const res = await axios.get(`https://sports-club-server-side.vercel.app/users/${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email

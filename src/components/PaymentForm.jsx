@@ -20,7 +20,7 @@ const PaymentForm = () => {
         queryKey: ['bookings', id],
         queryFn: async () => {
         const res = await axiosSecure.get(`/bookings/${id}`);
-        console.log('Booking Info Response:', res.data);  
+        //console.log('Booking Info Response:', res.data);  
         return res.data;
         }
     })
@@ -54,7 +54,7 @@ const PaymentForm = () => {
         }
         else{
             setError('');
-            console.log('payment method', paymentMethod)
+            //console.log('payment method', paymentMethod)
         }
 
         // create payment intent
@@ -79,7 +79,7 @@ const PaymentForm = () => {
         } else{
             setError('');
             if (result.paymentIntent.status === 'succeeded') {
-                console.log('Payment succeeded!')
+                //console.log('Payment succeeded!')
                 const transactionId=result.paymentIntent.id;
                 const paymentData = {
                     id, 

@@ -1,16 +1,17 @@
 import Lottie from 'lottie-react';
 import React from 'react';
 import errorLottie from '../assets/lottieFiles/errorLottie.json'
-import Navbar from '../components/Navbar';
+import { NavLink } from 'react-router';
 
 const ErrorPage = () => {
     return (
         <div>
-            <header>
-                <Navbar />
-            </header>
+            
             <div className='flex flex-col items-center justify-center mt-4'>
                 <Lottie animationData={errorLottie} className='w-96'/>
+            </div>
+            <div className='flex justify-center'>
+                <NavLink to='/'><button className='btn btn-neutral'>GO BACK TO HOME</button></NavLink>
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router';
+import { BiArrowFromLeft } from 'react-icons/bi';
 
 const Courts = () => {
   const [courts, setCourts] = useState([]);
@@ -12,7 +13,7 @@ const Courts = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/courts")
+    fetch("https://sports-club-server-side.vercel.app/courts")
       .then(res => {
         if (!res.ok) throw new Error("Failed to fetch");
         return res.json();
@@ -46,7 +47,7 @@ const Courts = () => {
       status: "pending",
     };
 
-    const res = await fetch("http://localhost:3000/bookings", {
+    const res = await fetch("https://sports-club-server-side.vercel.app/bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(booking)
@@ -64,8 +65,8 @@ const Courts = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
       {courts.map(court => (
-        <div key={court._id} className="bg-gray-200 p-4 shadow rounded">
-          <img src={court.image} alt="" className="w-full h-40 object-cover rounded" />
+        <div key={court._id} className="p-4 shadow">
+          <img src={court.image} alt="" className="w-full h-40 object-cover" />
           <h2 className="text-xl font-semibold">{court.type}</h2>
           <p>Available Slots: </p>
           <select className='p-2 bg-white rounded-lg mb-2'>
@@ -74,8 +75,8 @@ const Courts = () => {
             ))}
           </select>
           <p>Price: {court.price} BDT per Session</p>
-          <button onClick={() => handleBookNow(court)} className="mt-2 btn btn-neutral px-4 py-2 rounded">
-            Book Now
+          <button onClick={() => handleBookNow(court)} className="mt-2 btn btn-soft text-blue-600 px-4 py-2 rounded">
+            Book Now <BiArrowFromLeft/>
           </button>
         </div>
       ))}

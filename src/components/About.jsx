@@ -1,49 +1,25 @@
 import React from 'react';
-import { FaBullseye, FaChartLine, FaHandshake } from 'react-icons/fa';
-import { MdMuseum } from 'react-icons/md';
+import aboutImg1 from '../assets/about-1.jpg';
 
 const About = () => {
     return (
-        <section id="about" className="bg-base-100 py-4 md:px-20 lg:px-32 rounded-2xl">
-        <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">About Our Club</h2>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-            Welcome to <span className="font-semibold text-blue-600">Sports Club</span> — a vibrant and inclusive community built for fitness enthusiasts, athletes, and casual players alike. Located at the heart of the city, our club offers world-class facilities for tennis, badminton, squash, and more.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            <div className="p-2 hover:bg-blue-100 hover:rounded-2xl">
-                <h3 className="text-2xl font-semibold text-gray-700 mb-2 flex gap-2"><MdMuseum /> Our History</h3>
-                <p className="text-gray-600">
-                Founded in 2005, our club has grown from a small neighborhood facility to a fully-equipped sports complex. Over the past two decades, we've proudly served thousands of members by fostering a healthy, competitive, and fun environment.
-                </p>
+        <section id="about" className="py-10">
+            <div className='flex flex-col md:flex-row md:justify-between'>
+                <div className='md:w-1/2 justify-center'>
+                    <img className='w-full md:px-10' src={aboutImg1} />
+                </div>
+                <div className='flex flex-col md:w-1/2'>
+                    <small className='text-orange-600 font-bold'>ABOUT OUR CLUB</small>
+                    <h2 className='font-bold text-xl'>Welcome to our Sports  Club</h2>
+                    <br/>
+                    <p className='text-gray-600'>Welcome to our vibrant Sports Club — the perfect place for fitness, fun, and community! Whether you love basketball, tennis, badminton, football, volleyball, swimming, or table tennis, we offer top-notch courts and facilities to help you play your best. More than just a gym, our club brings together members of all levels to train, compete, and make lasting friendships.
+                    <br/><br/>
+                    Booking courts is easy with our online system, and payments are smooth and secure through Stripe. We provide flexible membership options to fit your lifestyle and a dedicated team ready to support your goals, whether for serious training or casual play. With regular events, competitions, and training sessions, there’s always something exciting going on.
+                    <br/><br/>
+                    Join us today to stay active, improve your game, and connect with a passionate sports community!
+                    </p> 
+                </div>
             </div>
-
-            <div className="p-2 hover:bg-blue-100 hover:rounded-2xl">
-                <h3 className="text-2xl font-semibold text-gray-700 mb-2 flex gap-2"><FaBullseye /> Our Mission</h3>
-                <p className="text-gray-600">
-                To promote a culture of active living, community engagement, and sportsmanship. We aim to provide a safe and enjoyable space where people of all ages and skill levels can train, play, and grow together.
-                </p>
-            </div>
-
-            <div className="p-2 hover:bg-blue-100 hover:rounded-2xl">
-                <h3 className="text-2xl font-semibold text-gray-700 mb-2 flex gap-2"><FaHandshake /> Our Values</h3>
-                <ul className="list-disc pl-5 text-gray-600 space-y-1">
-                <li>Inclusivity and respect for all members</li>
-                <li>Commitment to health, wellness, and safety</li>
-                <li>Encouraging personal growth through sports</li>
-                <li>Community-driven events and initiatives</li>
-                </ul>
-            </div>
-
-            <div className="p-2 hover:bg-blue-100 hover:rounded-2xl">
-                <h3 className="text-2xl font-semibold text-gray-700 mb-2 flex gap-2"><FaChartLine /> Our Vision</h3>
-                <p className="text-gray-600">
-                To become the leading local hub for sports and recreation, continuously expanding our offerings and embracing innovation through technology like our new online club management system.
-                </p>
-            </div>
-            </div>
-        </div>
         </section>
 
     );

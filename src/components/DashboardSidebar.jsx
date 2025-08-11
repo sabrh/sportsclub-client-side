@@ -4,6 +4,7 @@ import { MdPending } from 'react-icons/md';
 import { GrGroup } from 'react-icons/gr';
 import { BiSpeaker, BiUser } from 'react-icons/bi';
 import { BsPlay } from 'react-icons/bs';
+import logoImg from '../assets/logo.png';
 
 
 const DashboardSidebar = ({ user }) => {
@@ -93,7 +94,11 @@ const DashboardSidebar = ({ user }) => {
   );
 
   return (
-    <div className="w-64 bg-gray-800 text-white min-h-screen p-4">
+    <div className="w-64 bg-[#001C32] text-white min-h-screen p-4">
+      <div className='navbar-start'>
+      <NavLink to='/' className="flex items-center text-white font-extrabold text-2xl gap-x-1"><img src={logoImg} className="w-20" alt='logo' />SportsClub</NavLink>
+      </div>
+      
       <div className="mb-8">
         <h2 className="text-xl font-bold">Dashboard</h2>
         <p className="text-sm text-gray-400">{user?.displayName || user?.email}</p>

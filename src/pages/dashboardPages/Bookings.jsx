@@ -14,7 +14,7 @@ const Bookings = () => {
   const { data: bookings, isLoading, refetch } = useQuery({
     queryKey: ['bookings', user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`http://localhost:3000/bookings?email=${user?.email}`);
+      const res = await axiosSecure.get(`https://sports-club-server-side.vercel.app/bookings?email=${user?.email}`);
       return res.data;
     },
     enabled: !!user?.email
@@ -33,7 +33,7 @@ const handleCancelBooking = async (id) => {
   if (confirm.isConfirmed) {
     try {
       
-      axiosSecure.delete(`http://localhost:3000/bookings/${id}`)
+      axiosSecure.delete(`https://sports-club-server-side.vercel.app/bookings/${id}`)
           .then(res => {
             if (res.data.deletedCount) {
               Swal.fire('Cancelled!', 'Your booking has been cancelled.', 'success');

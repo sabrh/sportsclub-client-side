@@ -28,12 +28,12 @@ const Register = () => {
             }
 
             const res=await axiosInstance.post('/users', userInfo);
-            console.log('user update info', res.data);
+            //console.log('user update info', res.data);
 
             navigate(from, { replace: true });
         })
         .catch(error =>{
-            console.log(error)
+            //console.log(error)
         })
     }
 
@@ -41,7 +41,7 @@ const Register = () => {
     const { createUser } =useAuth()
     
     const onSubmit = data =>{
-        console.log(data)
+        //console.log(data)
 
         createUser(data.email, data.password)
         .then(async (result) => {
@@ -55,14 +55,14 @@ const Register = () => {
             }
 
             const userRes = await axiosInstance.post('/users', userInfo);
-            console.log(userRes.data);
+            //console.log(userRes.data);
 
 
             updateProfile(user, {
                 displayName: data.firstName
             })
             .then(() => {
-                console.log("User profile updated:", user);
+                //console.log("User profile updated:", user);
                 alert("Account created successfully!")
                 navigate('/login')
 

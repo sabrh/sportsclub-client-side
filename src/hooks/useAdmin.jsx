@@ -18,7 +18,7 @@ const useAdmin = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/admin/${user.email}`,
+          `https://sports-club-server-side.vercel.app/users/admin/${user.email}`,
           { withCredentials: true }
         );
         setIsAdmin(response.data.isAdmin);

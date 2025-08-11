@@ -32,7 +32,7 @@ const Login = () => {
             const res=await axiosInstance.post('/users', userInfo);
             console.log('user update info', res.data);
 
-            navigate(from, { replace: true });
+            navigate('/');
 
         })
         .catch(error =>{
@@ -43,12 +43,12 @@ const Login = () => {
     const { register, handleSubmit, formState: {errors} } = useForm()
 
      const onSubmit = data =>{
-            console.log(data)
+            //console.log(data)
     
             signIn(data.email, data.password)
              .then(result =>{
                 console.log(result.user)
-                navigate(from, { replace: true });
+                navigate('/');
             })
             .catch(error =>{
                 console.error(error)
@@ -58,7 +58,7 @@ const Login = () => {
 
     return (
         <div className="card w-full">
-        <h2 className='text-2xl font-bold'>Welcome to our Club!</h2>
+        <h2 className='text-2xl font-bold'>Welcome back to our Club!</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset className="fieldset">
 

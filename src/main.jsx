@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <div className="libertinus-mono-regular">
+      <div className="oswald-regular">
       <AuthProvider>
         <RouterProvider router={router}/>
       </AuthProvider>

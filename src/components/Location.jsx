@@ -4,20 +4,9 @@ import { CiLocationArrow1 } from 'react-icons/ci';
 
 const Location = () => {
     return (
-        <section className="bg-white py-16 px-4 rounded-2xl md:mr-4">
-            <div className="max-w-6xl mx-auto text-center">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2 flex"><CiLocationArrow1 /> Our Location</h2>
-                <p className="text-lg text-gray-600 mb-8">
-                You can find us at the heart of the city — easily accessible by public transport, just 10 minutes from the central bus station.
-                </p>
-
-            <div className="bg-gray-100 rounded-lg p-6 mb-6 text-left shadow-md">
-                <h3 className="text-xl font-semibold text-gray-700 mb-2 flex"><BiBuilding /> Address</h3>
-                <p className="text-gray-600 leading-relaxed">Sports Club<br />
-                123 Athletic Avenue, Gulshan, Dhaka 1212, Bangladesh</p>
-            </div>
-
-    {/* Embedded Google Map */}
+        <section className="py-4">
+            <div className="mx-auto text-center">
+            {/* Embedded Google Map */}
             <div className="w-full h-[300px] md:h-[450px] shadow-lg rounded-lg overflow-hidden">
                 <iframe
                 title="club-location-map"

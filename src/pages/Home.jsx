@@ -1,18 +1,22 @@
 import React from 'react';
+import Newsletter from '../components/Newsletter';
 import Banner from '../components/Banner';
 import About from '../components/About';
 import Location from '../components/Location';
 import Promotions from '../components/Promotions';
+import ClubsMarquee from '../components/ClubsMarquee';
+import News from '../components/News';
 
 const Home = () => {
     return (
         <div>
             <Banner />
             <About />
-            <div className="my-8 flex flex-col md:flex-row">
-                <Location />
-                <Promotions />
-            </div>
+            <News/>
+            <ClubsMarquee />
+            
+            <Location />
+            <Newsletter />
         </div>
     );
 };
