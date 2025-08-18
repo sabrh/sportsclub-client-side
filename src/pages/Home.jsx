@@ -6,15 +6,18 @@ import Location from '../components/Location';
 import Promotions from '../components/Promotions';
 import ClubsMarquee from '../components/ClubsMarquee';
 import News from '../components/News';
+import Reviews from '../components/Reviews';
+import Faq from '../components/Faq';
 
 const Home = () => {
     return (
         <div>
             <Banner />
             <About />
-            <News/>
             <ClubsMarquee />
-            
+            <Faq />
+            <News/>
+            <Reviews />
             <Location />
             <Newsletter />
         </div>
